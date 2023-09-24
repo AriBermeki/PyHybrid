@@ -15,7 +15,7 @@
 
     <script crossorigin src="../js/libs/react.production.min.js"></script>
 	<script crossorigin src="../js/libs/react-dom.production.min.js"></script>
-
+    <script src='../js/libs/react-router-dom.min.js'></script>
     <script type="application/javascript" src="../js/libs/dayjs.min.js"></script>
 
     <script type="application/javascript" src="../js/libs/antd.min.js"></script>
@@ -32,10 +32,13 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="text/babel">
-        const { Space, Input, Button, Layout, Image } = antd;
-        const { Header, Content } = Layout;
+        const {Layout}=antd
+        
+        const { Header, Content, Sider, Footer } = Layout;
         const { Html5Outlined, EditOutlined } = icons;
         const eel = window["eel"];
+        const Link = ReactRouterDOM.Link;
+        const Route = ReactRouterDOM.Route;
 
         const AntdComponentMap = {};
         const AntdIconsMap = {};
@@ -95,11 +98,13 @@
         
         ].includes(componentName);
 
-        const SubElement = (componentName) => [
-            'Content',
-            'Header',
-            'Sider',
-        ].includes(componentName);
+        const SubElementMap = {
+            'Content':Content,
+            'Header':Header,
+            'Sider':Sider,
+            'Footer':Footer
+            
+        };
 
         const DynamicAntdComponent = ({ component, props: componentProps, content }) => {
             const [AntdComponent, setAntdComponent] = React.useState(null);
@@ -145,7 +150,7 @@
             
             const componentStyles = stylesMap(componentProps.styles);
             const isVoid = isVoidElement(component);
-            const subElement = SubElement(component);
+            
 
             let renderedContent = null;
             if (typeof content === 'string') {
@@ -179,15 +184,15 @@
                 return acc;
             }, {});
 
-            const jsx = isVoid ? (
+            const jsx = isVoid ?  (
                 <AntdComponent {...jsxProps} />
             ) : (
                 <AntdComponent {...jsxProps} style={componentStyles}>
                     {renderedContent}
                 </AntdComponent>
             );
-
-            return jsx;
+            
+            return jsx 
         };
 
 
@@ -224,6 +229,12 @@
                     }, // Empty object as props
                     "content": ["hallo"]
                 },
+                {
+                    "component": "Slider",
+                    "props": {
+                    }, // Empty object as props
+                    "content": ["hallo"]
+                },
                 
                 ]
             };
@@ -231,20 +242,26 @@
             
             return (
                 <div>
-                <Layout>
-                    <DynamicAntdComponent {...jsonObject} />
-                    
-                    
-                </Layout>
-                
-                
-                
+                    <ReactRouterDOM.HashRouter>
+                        <Link to="/">Home</Link>
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                        
+                        <Layout>
+                            <DynamicAntdComponent {...jsonObject} />     
+                        </Layout>
+                        <Route path="/" exact component={Home} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                    </ReactRouterDOM.HashRouter>
                 </div>
             );
         };
 
 
-
+        const Home = () => <h1>Home</h1>
+        const Login = () => <h1>Login</h1>
+        const Register = () => <h1>Register</h1>
         ReactDOM.render(
             <App />,
             document.querySelector('#root'),
