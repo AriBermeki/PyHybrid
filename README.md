@@ -19,7 +19,7 @@
 
 ## ⚡ From idea to app in minutes
 <p>This feature makes Hybrid an ideal choice for creating sophisticated and comprehensive applications, catering to even the most demanding use cases.</p>
-<p>At the heart of Hybrid's architecture are cutting-edge technologies such as React, FastAPI, Chrome, and Uvicorn, providing an excellent platform for building high-quality applications that seamlessly blend into any environment.</p>
+<p>At the heart of Hybrid's architecture are cutting-edge technologies such as React, Bottle, Chrome, providing an excellent platform for building high-quality applications that seamlessly blend into any environment.</p>
 <p>Hybrid also supports the Python ZVT 700 electronic cash register interface, allowing for seamless integration of other transactions into your applications. Additionally, Hybrid supports PWA Progressive Web Applications, enabling easy installation of your app on IOS and Android operating systems.</p>
 
 
