@@ -22,6 +22,7 @@
     <script type="application/javascript" src="../js/libs/index.umd.min.js"></script>
 
     <link rel="stylesheet" href="../css/reset.min.css" id="antdcss">
+    <script src="https://cdn.jsdelivr.net/npm/@antv/g2plot@2.4.31/dist/g2plot.min.js"></script>
 
     <script type="application/javascript" src="../js/libs/babel.min.js"></script>
     
@@ -36,52 +37,204 @@
         const { Html5Outlined, EditOutlined } = icons;
         const eel = window["eel"];
 
+        const AntdComponentMap = {};
+        const AntdIconsMap = {};
+        const AntdChartsMap = {};
+        const eventMap = {
+            'onClick': (e)=>{ console.log(e)},
+            'onChange': (e)=>{ console.log(e)}
+        }
 
-        function App() {
+
+        const loadAntdComponent = async (componentName) => {
+            const antd_ = antd;
+            return antd_[componentName];
+        };
+
+        const loadAntdIconComponent = async (iconName) => {
+            if (!AntdIconsMap[iconName]) {
+                const icons_ = icons
+                AntdIconsMap[iconName] = icons_[iconName];
+            }
+            return AntdIconsMap[iconName];
+        };
+
+        const loadG2PlotChartComponent = async (chartName) => {
+            if (!AntdChartsMap[chartName]) {
+                const G2Plot_ = G2Plot
+                AntdChartsMap[chartName] = G2Plot_[chartName];
+            }
+            return AntdChartsMap[chartName];
+        };
+
+
+
+        const stylesMap = (styles) => {
+            let mappedStyles = {};
+            // Check if styles exist and is an array before running the forEach loop
+            if (styles && Array.isArray(styles)) {
+                styles.forEach((style) => {
+                mappedStyles[style.name] = style.value;
+                });
+            }
+            return mappedStyles;
+        };
+
+
+
+        const isVoidElement = (componentName) => [
+            'Input',
+            'InputNumber',
+            'Calendar',
+            'TextArea',
+            
+            
+            
+        
+        ].includes(componentName);
+
+        const SubElement = (componentName) => [
+            'Content',
+            'Header',
+            'Sider',
+        ].includes(componentName);
+
+        const DynamicAntdComponent = ({ component, props: componentProps, content }) => {
+            const [AntdComponent, setAntdComponent] = React.useState(null);
+            const [AntdIcon, setAntdIcon] = React.useState(null);
+            const [AntdChart, setAntdChart] = React.useState(null);
+
+            React.useEffect(() => {
+                const loadComponent = async () => {
+                    if (!AntdComponent) {
+                        if (!AntdComponentMap[component]) {
+                            AntdComponentMap[component] = await loadAntdComponent(component);
+                        }
+                        setAntdComponent(AntdComponentMap[component]);
+                    }
+                };
+                const loadicon = async () => {
+                    if (!AntdIcon) {
+                        if (!AntdIconsMap[component]) {
+                            AntdIconsMap[component] = await loadAntdIconComponent(component);
+                        }
+                        setAntdIcon(AntdIconsMap[component]);
+                    }
+                };
+                const loadchart = async () => {
+                    if (!AntdChart) {
+                        if (!AntdChartsMap[component]) {
+                            AntdChartsMap[component] = await loadG2PlotChartComponent(component);
+                        }
+                        setAntdChart(AntdChartsMap[component]);
+                    }
+                };
+
+                loadComponent();
+                loadicon();
+                loadchart();
+            }, [component, AntdComponent, AntdChart, AntdIcon]);
+
+            if (!AntdComponent) {
+                return null;
+            }
+
+            const componentStyles = stylesMap(componentProps.styles);
+            const isVoid = isVoidElement(component);
+            const subElement = SubElement(component);
+
+            let renderedContent = null;
+            if (typeof content === 'string') {
+                renderedContent = content;
+            } else if (Array.isArray(content)) {
+                renderedContent = content.map((child, index) => (
+                    // Handle text nodes or nested components here
+                    typeof child === 'string' ? child : (
+                        <DynamicAntdComponent key={index} {...child} />
+                    )
+                ));
+            }
+
+            const jsxProps = Object.keys(componentProps).reduce((acc, propKey) => {
+                if (eventMap[propKey]) {
+                    acc[propKey] = eventMap[propKey];
+                } else {
+                    acc[propKey] = componentProps[propKey];
+                }
+                return acc;
+            }, {});
+
+            const jsx = isVoid ? (
+                <AntdComponent {...jsxProps} />
+            ) : (
+                <AntdComponent {...jsxProps} style={componentStyles}>
+                    {renderedContent}
+                </AntdComponent>
+            );
+
+            return jsx;
+        };
+
+
+
+
+
+
+
+
+        const App = () => {
             eel.set_host("ws://localhost:8888");
-            const [ data, setData]= React.useState(null)
-            const handel_in=(e)=>{
-                eel.random_python()(function(number) {
-                    // Update the div with a random number returned by python
-                    setData(number);
-                });
-            }
 
-
-            const handel_inp=(e)=>{
-                eel.d_python(e.target.value)(function(number) {
-                    console.log('daten gesendet')
-                    
-                });
-            }
-
-
-
-
-
+            
+            const jsonObject = {
+                "component": "Layout",
+                "props": {
+                
+                },
+                "content": [
+                "Textknoten",
+                {
+                    "component": "Button",
+                    "props": {
+                    "type":"primary",
+                    "onClick":'onClick'
+                    }, // Empty object as props
+                    "content": ["hallo"]
+                },
+                {
+                    "component": "Input",
+                    "props": {
+                        'placeholder':'Entry',
+                        "onChange":'onChange',
+                    }, // Empty object as props
+                    "content": ["hallo"]
+                },
+                
+                ]
+            };
+            
+            
             return (
                 <div>
-                    <Layout style={{ width: '400px',padding:'20px', background: '#fff' }}>
-                        <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>
-                            <h1>Hello From ReactJs {data}<EditOutlined /></h1>
-                        </Header>
-                        <Content>
-                            <Space direction="vertical">
-                                <Input placeholder="Placeholder text" style={{ width: 200 }} onChange={handel_inp}/>
-                                <Button type="primary" onClick={handel_in}>Primary Button</Button>
-                                <Html5Outlined style={{ fontSize: '32px', color: '#08c' }} />
-                                <Image src="https://raw.githubusercontent.com/AriBermeki/hybridui/main/hybrid/libary_images/Ant.png"/>
-                            </Space>
-                        </Content>
-                    </Layout>
+                <Layout>
+                    <DynamicAntdComponent {...jsonObject} />
+                    
+                    
+                </Layout>
+                
+                
+                
                 </div>
             );
-        }
- 
+        };
+
+
+
         ReactDOM.render(
             <App />,
             document.querySelector('#root'),
         );
     </script>
+    
 </body>
 </html>
