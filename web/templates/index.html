@@ -41,7 +41,7 @@
         const AntdIconsMap = {};
         const AntdChartsMap = {};
 
-	let alte_event_wert = null
+	    let alte_event_wert = null
         const eventMap = {
             'onClick': (e)=>{ console.log(e, alte_event_wert)},
             'onChange': (e)=>{ console.log(e, alte_event_wert)}
@@ -105,8 +105,10 @@
             const [AntdComponent, setAntdComponent] = React.useState(null);
             const [AntdIcon, setAntdIcon] = React.useState(null);
             const [AntdChart, setAntdChart] = React.useState(null);
+            const [EventCall, setEventCall] = React.useState(null);
 
             React.useEffect(() => {
+                
                 const loadComponent = async () => {
                     if (!AntdComponent) {
                         if (!AntdComponentMap[component]) {
@@ -140,7 +142,7 @@
             if (!AntdComponent) {
                 return null;
             }
-
+            
             const componentStyles = stylesMap(componentProps.styles);
             const isVoid = isVoidElement(component);
             const subElement = SubElement(component);
@@ -157,13 +159,20 @@
                 ));
             }
 
-           const jsxProps = Object.keys(componentProps).reduce((acc, propKey) => {
+            const jsxProps = Object.keys(componentProps).reduce((acc, propKey) => {
                 if (eventMap[propKey]) {
+                    const eventHandlerKey = componentProps[propKey]; // Holen Sie sich den Wert aus componentProps
+                    
                     acc[propKey] = (e) => {
-			alte_event_wert = propKey
-                        console.log(`Event '${propKey}' ausgelöst mit Wert: ${componentProps[propKey]}`);
+                        //setEventCall(eventHandlerKey)
+                        const f=(e)=>{alte_event_wert = eventHandlerKey}
+                        f()
+                        console.log(`Event '${propKey}' ausgelöst mit Wert: ${eventHandlerKey}`);
                         eventMap[propKey](e);
+                        
+                        
                     };
+
                 } else {
                     acc[propKey] = componentProps[propKey];
                 }
@@ -211,7 +220,7 @@
                     "component": "Input",
                     "props": {
                         'placeholder':'Entry',
-                        "onChange":'onChange',
+                        "onChange":'onChjijjoijioange',
                     }, // Empty object as props
                     "content": ["hallo"]
                 },
