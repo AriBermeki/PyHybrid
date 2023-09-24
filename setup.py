@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/AriBermeki/hybridui",
     packages=setuptools.find_packages(),
     package_data={
-        "hybrid": ["charts/*", "core/*", "elements/*", "eventarguments/*", "web/**"]
+        "hybrid": ["charts/*", "core/*", "elements/*", "eventarguments/*", "web/***"]
     },
     install_requires=[
         'fastapi',
