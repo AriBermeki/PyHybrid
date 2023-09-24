@@ -5,7 +5,7 @@ with open("./README.md", "r", encoding='utf-8') as fh:
 
 setuptools.setup(
     name="HybridUI", 
-    version="0.0.9",
+    version="0.0.1",
     author="Ari Bermeki",
     author_email="ari.bermeki.de@gmail.com",
     description="Create an efficient and enjoyable work experience with pure Python",
