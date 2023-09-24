@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Web site created using HybridUI"/>
+    <link rel="apple-touch-icon" href="../images/logo192.png"  />
+    <link rel="manifest" href="../manifest.json" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="/eel.js"></script>
+
+    <script crossorigin src="../js/libs/react.production.min.js"></script>
+	<script crossorigin src="../js/libs/react-dom.production.min.js"></script>
+
+    <script type="application/javascript" src="../js/libs/dayjs.min.js"></script>
+
+    <script type="application/javascript" src="../js/libs/antd.min.js"></script>
+    <script type="application/javascript" src="../js/libs/index.umd.min.js"></script>
+
+    <link rel="stylesheet" href="../css/reset.min.css" id="antdcss">
+
+    <script type="application/javascript" src="../js/libs/babel.min.js"></script>
+    
+    <title>EEL Antd</title>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { Space, Input, Button, Layout, Image } = antd;
+        const { Header, Content } = Layout;
+        const { Html5Outlined, EditOutlined } = icons;
+        const eel = window["eel"];
+
+
+        function App() {
+            eel.set_host("ws://localhost:8888");
+            const [ data, setData]= React.useState(null)
+            const handel_in=(e)=>{
+                eel.random_python()(function(number) {
+                    // Update the div with a random number returned by python
+                    setData(number);
+                });
+            }
+
+
+            const handel_inp=(e)=>{
+                eel.d_python(e.target.value)(function(number) {
+                    console.log('daten gesendet')
+                    
+                });
+            }
+
+
+
+
+
+            return (
+                <div>
+                    <Layout style={{ width: '400px',padding:'20px', background: '#fff' }}>
+                        <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>
+                            <h1>Hello From ReactJs {data}<EditOutlined /></h1>
+                        </Header>
+                        <Content>
+                            <Space direction="vertical">
+                                <Input placeholder="Placeholder text" style={{ width: 200 }} onChange={handel_inp}/>
+                                <Button type="primary" onClick={handel_in}>Primary Button</Button>
+                                <Html5Outlined style={{ fontSize: '32px', color: '#08c' }} />
+                                <Image src="https://raw.githubusercontent.com/AriBermeki/hybridui/main/hybrid/libary_images/Ant.png"/>
+                            </Space>
+                        </Content>
+                    </Layout>
+                </div>
+            );
+        }
+ 
+        ReactDOM.render(
+            <App />,
+            document.querySelector('#root'),
+        );
+    </script>
+</body>
+</html>
