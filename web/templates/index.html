@@ -40,9 +40,11 @@
         const AntdComponentMap = {};
         const AntdIconsMap = {};
         const AntdChartsMap = {};
+
+	let alte_event_wert = null
         const eventMap = {
-            'onClick': (e)=>{ console.log(e)},
-            'onChange': (e)=>{ console.log(e)}
+            'onClick': (e)=>{ console.log(e, alte_event_wert)},
+            'onChange': (e)=>{ console.log(e, alte_event_wert)}
         }
 
 
@@ -155,9 +157,13 @@
                 ));
             }
 
-            const jsxProps = Object.keys(componentProps).reduce((acc, propKey) => {
+           const jsxProps = Object.keys(componentProps).reduce((acc, propKey) => {
                 if (eventMap[propKey]) {
-                    acc[propKey] = eventMap[propKey];
+                    acc[propKey] = (e) => {
+			alte_event_wert = propKey
+                        console.log(`Event '${propKey}' ausgelöst mit Wert: ${componentProps[propKey]}`);
+                        eventMap[propKey](e);
+                    };
                 } else {
                     acc[propKey] = componentProps[propKey];
                 }
