@@ -838,12 +838,11 @@ const {
     VideoCameraOutlined: VideoCameraOutlined ,
     WalletOutlined: WalletOutlined ,
     WifiOutlined: WifiOutlined ,
-  };
-  
-  const Icon_from_String_to_JSX=(ic)=>{
+};
+const Icon_from_String_to_JSX=(ic)=>{
     const Iconsys = IconMap[ic]
     return(
         <Iconsys/>
     )
 }
-export  { IconMap, Icon_from_String_to_JSX}
+
