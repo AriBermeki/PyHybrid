@@ -56,12 +56,9 @@ const RenderComponent = ({ componentData}) => {
           case 'FloatButton':
             const {FloatButton} = antd 
             return <FloatButton {...componentProps}>{renderChildren()}</FloatButton>;
-          case 'New':
-            //'New' 
-            return <New {...componentProps}>{renderChildren()}</New>;
           case 'Icon':
-            //'Icon' 
-            return <Icon {...componentProps}>{renderChildren()}</Icon>;
+            const Icon = IconMap[componentProps.icon]
+            return <Icon {...componentProps}/>;
           case 'Typography':
             const { Typography } = antd; 
             return <Typography {...componentProps}>{renderChildren()}</Typography>;
