@@ -15,16 +15,21 @@
 
     <script crossorigin src="../js/libs/react.production.min.js"></script>
 	<script crossorigin src="../js/libs/react-dom.production.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/react-router@6.16.0/dist/umd/react-router.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.16.0/dist/umd/react-router-dom.production.min.js"></script>-->
+
     <script src='../js/libs/react-router-dom.min.js'></script>
     <script type="application/javascript" src="../js/libs/dayjs.min.js"></script>
 
     <script type="application/javascript" src="../js/libs/antd.min.js"></script>
     <script type="application/javascript" src="../js/libs/index.umd.min.js"></script>
-
+        <!--<script src="https://unpkg.com/@ant-design/charts@1.0.5/dist/charts.min.js"></script>
+        <script src="https://unpkg.com/@ant-design/charts@1.0.5/dist/charts_g6.min.js"></script>-->
     <link rel="stylesheet" href="../css/reset.min.css" id="antdcss">
     <script src="https://cdn.jsdelivr.net/npm/@antv/g2plot@2.4.31/dist/g2plot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.20/babel.min.js"></script>
 
-    <script type="application/javascript" src="../js/libs/babel.min.js"></script>
+    <!--<script type="application/javascript" src="../js/libs/babel.min.js"></script>-->
     
     <title>EEL Antd</title>
 </head>
@@ -32,11 +37,10 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="text/babel">
+        const eel = window["eel"];
         const {Layout}=antd
-        
         const { Header, Content, Sider, Footer } = Layout;
         const { Html5Outlined, EditOutlined } = icons;
-        const eel = window["eel"];
         const Link = ReactRouterDOM.Link;
         const Route = ReactRouterDOM.Route;
 
@@ -45,10 +49,8 @@
         const AntdChartsMap = {};
 
 	    let alte_event_wert = null
-        const eventMap = {
-            'onClick': (e)=>{ console.log(e, alte_event_wert)},
-            'onChange': (e)=>{ console.log(e, alte_event_wert)}
-        }
+        
+        
 
 
         const loadAntdComponent = async (componentName) => {
@@ -106,11 +108,24 @@
             
         };
 
+
+        const handel_onchange=(e)=>{
+            eel.slider_handler(e)(function(number){
+                    console.log(`die daten für Slider sind geschickt: ${alte_event_wert}`)
+                })
+            }
+
         const DynamicAntdComponent = ({ component, props: componentProps, content }) => {
+            
             const [AntdComponent, setAntdComponent] = React.useState(null);
             const [AntdIcon, setAntdIcon] = React.useState(null);
             const [AntdChart, setAntdChart] = React.useState(null);
             const [EventCall, setEventCall] = React.useState(null);
+            
+            const eventMap = {
+            'onClick': (e)=>{ console.log(e, alte_event_wert)},
+            'onChange': (e)=>{handel_onchange(e)}
+        }
 
             React.useEffect(() => {
                 
@@ -184,15 +199,26 @@
                 return acc;
             }, {});
 
-            const jsx = isVoid ?  (
-                <AntdComponent {...jsxProps} />
-            ) : (
-                <AntdComponent {...jsxProps} style={componentStyles}>
-                    {renderedContent}
-                </AntdComponent>
-            );
-            
-            return jsx 
+            const isAntdComponent = !!AntdComponentMap[component]; // Überprüfe, ob es sich um eine Antd-Komponente handelt
+
+            // Verwende eine Bedingung, um das Antd-Element oder das Standard-React-Element zu rendern
+            let jsx;
+            if (isAntdComponent) {
+                if (isVoid) {
+                    jsx = React.createElement(AntdComponentMap[component], jsxProps);
+                } else {
+                    jsx = React.createElement(AntdComponentMap[component], { ...jsxProps, style: componentStyles }, renderedContent);
+                }
+            } else {
+                if (isVoid) {
+                    jsx = React.createElement(component, jsxProps);
+                } else {
+                    jsx = React.createElement(component, { ...jsxProps, style: componentStyles }, renderedContent);
+                }
+            }
+
+            return jsx;
+
         };
 
 
@@ -204,7 +230,6 @@
 
         const App = () => {
             eel.set_host("ws://localhost:8888");
-
             
             const jsonObject = {
                 "component": "Layout",
@@ -232,8 +257,15 @@
                 {
                     "component": "Slider",
                     "props": {
+                        'onChange':'slider'
                     }, // Empty object as props
                     "content": ["hallo"]
+                },
+                {
+                    "component": "h1",
+                    "props": {
+                    }, // Empty object as props
+                    "content": ["hallo von Standard React Element"]
                 },
                 
                 ]
