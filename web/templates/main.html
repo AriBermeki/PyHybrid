@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Web site created using HybridUI"/>
+    <!--<link rel="apple-touch-icon" href="../images/logo192.png"  />-->
+    <link rel="manifest" href="../manifest.json" />
+    <script type="text/javascript" src="/eel.js"></script>
+    <script crossorigin="anonymous" src="../js/libs/react.production.min.js"></script>
+	<script crossorigin="anonymous" src="../js/libs/react-dom.production.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/react-router@6.16.0/dist/umd/react-router.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.16.0/dist/umd/react-router-dom.production.min.js"></script>-->
+    <script type="text/babel" src="../js/core/render_context.js"></script>
+    <script src='../js/libs/react-router-dom.min.js'></script>
+    <script type="application/javascript" src="../js/libs/dayjs.min.js"></script>
+
+    <script type="application/javascript" src="../js/libs/antd.min.js"></script>
+    <script type="application/javascript" src="../js/libs/index.umd.min.js"></script>
+        <!--<script src="https://unpkg.com/@ant-design/charts@1.0.5/dist/charts.min.js"></script>
+        <script src="https://unpkg.com/@ant-design/charts@1.0.5/dist/charts_g6.min.js"></script>-->
+    <link rel="stylesheet" href="../css/reset.min.css" id="antdcss">
+    <script src="https://cdn.jsdelivr.net/npm/@antv/g2plot@2.4.31/dist/g2plot.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+
+    <!--<script type="application/javascript" src="../js/libs/babel.min.js"></script>-->
+    
+    <title>EEL Antd</title>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <script type="text/babel">
+
+
+    
+    const eel = window["eel"];
+
+
+    
+    const App = () => {
+      eel.set_host("ws://localhost:8888");
+      
+      const jsonData = {
+      "component": "Layout",
+      "props": {},
+      "content": [
+        {
+        "component": "Content",
+        "props": {},
+        "content": [
+        
+        
+        {
+          "component": "Serach",
+          "props": {},
+          
+        },
+        {
+          "component": "Button",
+          "props": {
+            "type": "primary",
+            "onClick": () => console.log("Button wurde geklickt") // Hier sollte eine Funktion stehen
+          },
+          "content": ["hallo"]
+        },
+        {
+          "component": "Input",
+          "props": {
+            'placeholder': 'Entry',
+            "onChange": () => console.log("Input wurde geändert") // Hier sollte eine Funktion stehen
+          },
+
+        },
+        {
+          "component": "Slider",
+          "props": {
+            'onChange': () => console.log("Slider wurde geändert") // Hier sollte eine Funktion stehen
+          },
+          
+        },
+        {
+          "component": "Progress",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        },
+        {
+          "component": "DatePicker",
+          "props": {},
+        
+          
+        },
+      
+        {
+          "component": "FloatButton",
+          "props": {},
+          "content": ["React FloatButton"]
+        
+          
+        },
+        {
+          "component": "Divider",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Space",
+          "props": {},
+          "content": [
+        {
+          "component": "Card",
+          "props": {},
+          "content": ["Card1"]
+        
+          
+        },
+      
+        {
+          "component": "Card",
+          "props": {},
+          "content": ["Card"]
+        
+          
+        },
+
+      ]
+        
+          
+        },
+        {
+          "component": "Anchor",
+          "props": {},
+          "content": [""]
+        
+          
+        },
+        {
+          "component": "Breadcrumb",
+          "props": {},
+          "content": []
+          
+        
+          
+        },
+        {
+          "component": "Pagination",
+          "props": {
+            
+          },
+          "content": []
+        
+          
+        },
+        {
+          "component": "Cascader",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Checkbox",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Tree",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Tour",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Rate",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Empty",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Table",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "ColorPicker",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Form",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "InputNumber",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Mentions",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Radio",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Select",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Switch",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "TimePicker",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Transfer",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "TreeSelect",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Upload",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Avatar",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Badge",
+          "props": {
+            'count':5
+          },
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Calendar",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Carousel",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Collapse",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Descriptions",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Image",
+          "props": {
+            'src':"https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+          },
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "List",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "ListItem",
+          "props": {},
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Popover",
+          "props": {
+            'content':"hallo von Standard React Element"
+          },
+          "content": [
+            {
+            "component": "Button",
+            "props": {},
+            "content": ["Popover Button"]
+          },
+        ] 
+      },
+      {
+        "component": "Segmented",
+        "props": {
+          'options':['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']
+        },
+        "content": []
+        
+          
+        },
+        {
+          "component": "Statistic",
+          "props": {
+            'title':"Account Balance (CNY)" ,
+            'value':112893, 
+            'precision':2
+          },
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Tabs",
+          "props": {
+            'items':[
+                {
+                  'key': '1',
+                  'label': 'Tab 1',
+                  'children': 'Content of Tab Pane 1',
+                },
+                {
+                  'key': '2',
+                  'label': 'Tab 2',
+                  'children': 'Content of Tab Pane 2',
+                },
+                {
+                  'key': '3',
+                  'label': 'Tab 3',
+                  'children': 'Content of Tab Pane 3',
+                },
+              ]
+          },
+          "content": []
+        
+          
+        },
+        {
+          "component": "Tag",
+          "props": {
+            'color':"#87d068"
+          },
+          "content": ["Antd Tag Element"]
+        
+          
+        },
+        {
+          "component": "Timeline",
+          "props": {
+            'items':[
+              {
+                'children': 'Create a services site 2015-09-01',
+              },
+              {
+                'children': 'Solve initial network problems 2015-09-01',
+              },
+              {
+                'children': 'Technical testing 2015-09-01',
+              },
+              {
+                'children': 'Network problems being solved 2015-09-01',
+              },
+            ]
+          },
+          "content": []
+        
+          
+        },
+        {
+          "component": "Tooltip",
+          "props": {
+            'placement':"topLeft",
+            'title':'DDDD'
+          },
+          "content": [
+            {
+            "component": "Button",
+            "props": {},
+            "content": ["Tooltip"]
+            },
+          ]
+        
+        },
+        {
+          "component": "Row",
+          "props": {},
+          "content": [
+            {
+            "component": "Col",
+            "props": {},
+            "content": [
+              {
+                "component": "Button",
+                "props": {},
+                "content": ["hallo von Standard React Element"]
+              
+                
+              },
+            ]
+          
+            
+          },{
+            "component": "Col",
+            "props": {},
+            "content": [
+              {
+                "component": "Button",
+                "props": {},
+                "content": ["hallo von Standard React Element"]
+              
+                
+              },
+            ]
+          
+            
+          },
+          ]
+        
+          
+        },
+       
+        {
+          "component": "Tree",
+          "props": {
+            'checkable':true
+          },
+          "content": []
+        
+          
+        },
+        {
+          "component": "Alert",
+          "props": {
+            'message':"Success Text",
+            'type':"success" 
+          },
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Skeleton",
+          "props": {
+            'active ':true
+          },
+          "content": ["hallo von Standard React Element"]
+        
+          
+        },
+        {
+          "component": "Spin",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Password",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "TextArea",
+          "props": {},
+          "content": []
+        
+          
+        },
+        {
+          "component": "Watermark",
+          "props": {
+            'content':" Hybrid with Ant Design UI"
+          },
+          "content": [
+            {
+              "component": "ReactNode",
+              "props": {
+                'node':'div',
+                'style':{
+                  'height': 500,
+                }
+              },
+              "content": []
+            
+              
+            }
+          ]
+        
+          
+        }
+        ]
+      }
+    ]
+    };
+
+      return(
+        <React.Fragment>
+          <RenderComponent componentData={jsonData}/>
+        </React.Fragment>
+      )
+
+    }
+    
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+  </script>
+</body>
+</html>
+
+
+
